@@ -28,29 +28,35 @@ app.get('/', (request, response) => {
   // response.send(relativePathRelativeToRoot, {root: __dirname})
   // __dirname is current directory
 
-  response.render('index'); // looks at index.ejs file
+  const blogs = [
+    {title: 'Yoshi finds eggs', snippet: 'They are speckled green.'},
+    {title: 'Mario finds stars', snippet: 'Again for the 50th time.'},
+    {title: 'How to defeat Bowser', snippet: 'Grab him by the tail.'}
+  ]
+
+  response.render('index', { title: 'Home', blogs }); // looks at index.ejs file; 2nd arg is an object that will be passed to index.ejs as data
 });
 
 app.get('/about', (request, response) => {
   // response.send('<p>about page</p>');
   // response.sendFile('./views/about.html', {root: __dirname});
 
-  response.render('about');
+  response.render('about', { title: 'About' });
 });
 
 // redirects '/about-us' to 'about'
-// doesn't work/ course might be outdated
+// doesn't work; course might be outdated
 app.get('/about-us', (request, response) => {
   response.redirect('/about');
 });
 
 app.get('/blogs/create', (request, response) => {
-  response.render('create');
+  response.render('create', { title: 'Create an Entry' });
 })
 
 // 404 page
 // not necessary for 404 page to show if 404 file is named 404.html
 app.use((request, response) => {
   // response.status(404).sendFile('./views/404file.html', {root: __dirname})
-  response.status(404).render('404');
+  response.status(404).render('404', {title: '404'});
 })
